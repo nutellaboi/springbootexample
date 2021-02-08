@@ -1,13 +1,13 @@
 package com.sandbox.testing.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.sandbox.testing.entity.employee_table;
+import com.sandbox.testing.entity.EmployeeTable;
 
 @Repository
 public class TestDaoImp implements TestDao {
@@ -15,16 +15,36 @@ public class TestDaoImp implements TestDao {
 	@Autowired
 	JdbcTemplate jdbc;
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public List<Map<String, Object>> getEmpData() {
+	public List<EmployeeTable> getEmpData() {
 		// TODO Auto-generated method stub
 		String sql="SELECT employee_id,employee_name,phone,address FROM employee_table";
-		List<Map<String,Object>> EmpList=jdbc.queryForList(sql);
+		//List<Map<String,Object>> EmpList=jdbc.queryForList(sql);
+		List<EmployeeTable> EmpList=jdbc.query(sql, new BeanPropertyRowMapper(EmployeeTable.class));
+		return EmpList;
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
+	public List<EmployeeTable> getEmpDataById(int id) {
+		// TODO Auto-generated method stub
+		String sql="SELECT employee_id,employee_name,phone,address FROM employee_table WHERE employee_id=?";
+		List<EmployeeTable> EmpList=jdbc.query(sql,new BeanPropertyRowMapper(EmployeeTable.class), new Object[] {id});
 		return EmpList;
 	}
 
 	@Override
-	public List<Map<String, Object>> putEmpData(String etString, int id) {
+	public int postEmpData(EmployeeTable emp) {
+		// TODO Auto-generated method stub
+		String sql="INSERT INTO employee_table(employee_name,phone,address) VALUES "
+				+ "('"+emp.getEmployee_name()+"','"+emp.getPhone()+"','"+emp.getAddress()+"')";
+		int val=jdbc.update(sql);
+		return val;
+	}
+
+	@Override
+	public List<EmployeeTable> putEmpData(String etString, int id) {
 		// TODO Auto-generated method stub
 		String sql="UPDATE employee_table SET "+etString+" WHERE employee_id="+id;
 		jdbc.update(sql);
@@ -32,28 +52,12 @@ public class TestDaoImp implements TestDao {
 	}
 
 	@Override
-	public int postEmpData(employee_table emp) {
+	public int deleteEmpData(int id) {
 		// TODO Auto-generated method stub
-		String sql="INSERT INTO employee_table(employee_name,phone,address) VALUES"
-				+ " ('"+emp.getEmployee_name()+"','"+emp.getPhone()+"','"+emp.getAddress()+"')";
-		int val=jdbc.update(sql);
+		String sql="DELETE FROM employee_table WHERE employee_id=? ";
+		int val=jdbc.update(sql, new Object[] {id});
 		return val;
 	}
 
-	@Override
-	public List<Map<String, Object>> deleteEmpData(int id) {
-		// TODO Auto-generated method stub
-		String sql="DELETE FROM employee_table WHERE employee_id=? ";
-		jdbc.update(sql, new Object[] {id});
-		return getEmpData();
-	}
-
-	@Override
-	public List<Map<String, Object>> getEmpDataById(int id) {
-		// TODO Auto-generated method stub
-		String sql="SELECT employee_id,employee_name,phone,address FROM employee_table WHERE employee_id="+id;
-		List<Map<String,Object>> EmpList=jdbc.queryForList(sql);
-		return EmpList;
-	}
 
 }

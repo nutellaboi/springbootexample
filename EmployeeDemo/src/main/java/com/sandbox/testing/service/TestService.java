@@ -3,18 +3,18 @@ package com.sandbox.testing.service;
 import java.util.List;
 import java.util.Map;
 
-import com.sandbox.testing.entity.employee_table;
+import com.sandbox.testing.entity.EmployeeTable;
 
 public interface TestService {
 	
-	public List<Map<String,Object>> getData();
+	public List<EmployeeTable> getData();
 
-	public int postData(employee_table emp);
+	public int postData(EmployeeTable emp);
 
-	public List<Map<String, Object>> deleteData(int id);
+	public int deleteData(int id);
 
-	public List<Map<String, Object>> getDataById(int id);
+	public List<EmployeeTable> getDataById(int id);
 
-	public List<Map<String, Object>> putData(int id, Map<String, Object> emp);
+	public List<EmployeeTable> putData(int id, Map<String, Object> emp);
 
 }

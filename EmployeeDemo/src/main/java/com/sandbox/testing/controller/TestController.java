@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sandbox.testing.entity.employee_table;
+import com.sandbox.testing.entity.EmployeeTable;
 import com.sandbox.testing.service.TestServiceImp;
 
 @RestController
+@RequestMapping("/emp")
 public class TestController {
 
 	@Autowired
@@ -23,7 +24,7 @@ public class TestController {
 	
 	@RequestMapping(method=RequestMethod.GET,value="/get")
 	public ResponseEntity<Object> getData(){
-		List<Map<String,Object>> list=serv.getData();
+		List<EmployeeTable> list=serv.getData();
 		ResponseEntity<Object> response;
 		if(list.isEmpty()) {
 			String s="No Records Found";
@@ -38,25 +39,25 @@ public class TestController {
 	
 	@RequestMapping(method=RequestMethod.GET,value="/get/{id}") //pass employee_id in URL
 	public ResponseEntity<Object> getData(@PathVariable int id){
-		List<Map<String,Object>> list=serv.getDataById(id);
+		List<EmployeeTable> list=serv.getDataById(id);
 		ResponseEntity<Object> response;
 		if(list.isEmpty()) {
 			String s="No Records Found";
 			response= new ResponseEntity<Object>(s,HttpStatus.NOT_FOUND);
 		}
 		else {
-			response= new ResponseEntity<Object>(list,HttpStatus.OK);
+			response= new ResponseEntity<Object>(list.get(0),HttpStatus.OK);
 
 		}
 		return response;
 	}
 	
 	@RequestMapping(method=RequestMethod.POST,value="/post")
-	public ResponseEntity<Object> postData(@RequestBody employee_table emp){
+	public ResponseEntity<Object> postData(@RequestBody EmployeeTable emp){
 		int val=serv.postData(emp);
 		ResponseEntity<Object> response;
-		if(val==1) {
-			String s="Data Inserted";
+		if(val>=1) {
+			String s=val+" Data Inserted";
 			response= new ResponseEntity<Object>(s,HttpStatus.CREATED);
 		}
 		else {
@@ -68,28 +69,29 @@ public class TestController {
 	
 	@RequestMapping(method=RequestMethod.PUT,value="/put/{id}") //pass employee_id in URL
 	public ResponseEntity<Object> putData(@PathVariable int id,@RequestBody Map<String,Object> emp){
-		List<Map<String,Object>> list=serv.putData(id,emp);
+		List<EmployeeTable> list=serv.putData(id,emp);
 		ResponseEntity<Object> response;
 		if(list.isEmpty()) {
 			String s="No Records Found";
 			response= new ResponseEntity<Object>(s,HttpStatus.NOT_FOUND);
 		}
 		else {
-			response= new ResponseEntity<Object>(list,HttpStatus.OK);
+			response= new ResponseEntity<Object>(list.get(0),HttpStatus.OK);
 		}
 		return response;
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE,value="/delete/{id}") //pass employee_id in URL
 	public ResponseEntity<Object> deleteData(@PathVariable int id){
-		List<Map<String,Object>> modifiedList=serv.deleteData(id);
+		int val=serv.deleteData(id);
 		ResponseEntity<Object> response;
-		if(!modifiedList.isEmpty()) {
-			response=new ResponseEntity<Object>(modifiedList,HttpStatus.OK);
+		if(val>0) {
+			String s="Data Deleted";
+			response=new ResponseEntity<Object>(s,HttpStatus.OK);
 		}
 		else {
-			String s="Table is Empty";
-			response= new ResponseEntity<Object>(s,HttpStatus.NOT_FOUND);
+			String s="Error in Deletion: Check Id.";
+			response= new ResponseEntity<Object>(s,HttpStatus.NOT_IMPLEMENTED);
 		}
 		return response;
 	}

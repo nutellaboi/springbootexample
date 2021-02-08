@@ -1,15 +1,15 @@
 package com.sandbox.testing.entity;
 
-public class employee_table {
+public class EmployeeTable {
 
 	private int employee_id;
 	private String employee_name;
 	private String phone;
 	private String address;
-	public employee_table() {
+	public EmployeeTable() {
 		
 	}
-	public employee_table(int employee_id, String employee_name, String phone, String address) {
+	public EmployeeTable(int employee_id, String employee_name, String phone, String address) {
 		super();
 		this.employee_id = employee_id;
 		this.employee_name = employee_name;

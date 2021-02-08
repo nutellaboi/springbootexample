@@ -1,20 +1,19 @@
 package com.sandbox.testing.dao;
 
 import java.util.List;
-import java.util.Map;
 
-import com.sandbox.testing.entity.employee_table;
+import com.sandbox.testing.entity.EmployeeTable;
 
 public interface TestDao {
 	
-	public List<Map<String, Object>> getEmpData();
+	public List<EmployeeTable> getEmpData();
 
-	public int postEmpData(employee_table emp);
+	public int postEmpData(EmployeeTable emp);
 
-	public List<Map<String, Object>> deleteEmpData(int id);
+	public int deleteEmpData(int id);
 
-	public List<Map<String, Object>> getEmpDataById(int id);
+	public List<EmployeeTable> getEmpDataById(int id);
 
-	public List<Map<String, Object>> putEmpData(String etString, int id);
+	public List<EmployeeTable> putEmpData(String etString, int id);
 
 }

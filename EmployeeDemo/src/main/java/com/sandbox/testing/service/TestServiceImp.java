@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sandbox.testing.dao.TestDaoImp;
-import com.sandbox.testing.entity.employee_table;
+import com.sandbox.testing.entity.EmployeeTable;
 
 @Service
 public class TestServiceImp implements TestService{
@@ -19,15 +19,15 @@ public class TestServiceImp implements TestService{
 	TestDaoImp dao;
 	
 	@Override
-	public List<Map<String, Object>> getData() {
+	public List<EmployeeTable> getData() {
 		// TODO Auto-generated method stub
 		return dao.getEmpData();
 	}
 
 	@Override
-	public List<Map<String, Object>> putData(int id, Map<String, Object> emp) {
+	public List<EmployeeTable> putData(int id, Map<String, Object> emp) {
 		// TODO Auto-generated method stub
-		employee_table et=new employee_table();
+		EmployeeTable et=new EmployeeTable();
 		List<String> employee_table_all_fields=this.getFieldNames(et); //getting all the field names
 		et=null;
 		List<String> etFields=new ArrayList<String>();
@@ -41,19 +41,19 @@ public class TestServiceImp implements TestService{
 	}
 
 	@Override
-	public int postData(employee_table emp) {
+	public int postData(EmployeeTable emp) {
 		// TODO Auto-generated method stub
 		return dao.postEmpData(emp);
 	}
 
 	@Override
-	public List<Map<String, Object>> deleteData(int id) {
+	public int deleteData(int id) {
 		// TODO Auto-generated method stub
 		return dao.deleteEmpData(id);
 	}
 
 	@Override
-	public List<Map<String, Object>> getDataById(int id) {
+	public List<EmployeeTable> getDataById(int id) {
 		// TODO Auto-generated method stub
 		return dao.getEmpDataById(id);
 	}
