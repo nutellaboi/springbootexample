@@ -1,11 +1,11 @@
-package com.sandbox.testing.service;
+package demo.employee.service;
 
 import java.util.List;
 import java.util.Map;
 
-import com.sandbox.testing.entity.EmployeeTable;
+import demo.employee.entity.EmployeeTable;
 
-public interface TestService {
+public interface EmployeeService {
 	
 	public List<EmployeeTable> getData();
 

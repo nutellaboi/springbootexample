@@ -1,4 +1,4 @@
-package com.sandbox.testing.controller;
+package demo.employee.controller;
 
 import java.util.List;
 import java.util.Map;
@@ -12,15 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sandbox.testing.entity.EmployeeTable;
-import com.sandbox.testing.service.TestServiceImp;
+import demo.employee.entity.EmployeeTable;
+import demo.employee.service.EmployeeServiceImp;
 
 @RestController
 @RequestMapping("/emp")
-public class TestController {
+public class EmployeeController {
 
 	@Autowired
-	TestServiceImp serv;
+	EmployeeServiceImp serv;
 	
 	@RequestMapping(method=RequestMethod.GET,value="/get")
 	public ResponseEntity<Object> getData(){
@@ -38,7 +38,7 @@ public class TestController {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET,value="/get/{id}") //pass employee_id in URL
-	public ResponseEntity<Object> getData(@PathVariable int id){
+	public ResponseEntity<Object> getDataById(@PathVariable int id){
 		List<EmployeeTable> list=serv.getDataById(id);
 		ResponseEntity<Object> response;
 		if(list.isEmpty()) {
@@ -58,7 +58,7 @@ public class TestController {
 		ResponseEntity<Object> response;
 		if(val>=1) {
 			String s=val+" Data Inserted";
-			response= new ResponseEntity<Object>(s,HttpStatus.CREATED);
+			response= new ResponseEntity<Object>(s,HttpStatus.OK);
 		}
 		else {
 			String s="Error Inserting";

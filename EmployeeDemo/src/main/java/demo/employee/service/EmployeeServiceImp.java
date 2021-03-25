@@ -1,4 +1,4 @@
-package com.sandbox.testing.service;
+package demo.employee.service;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -9,14 +9,14 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sandbox.testing.dao.TestDaoImp;
-import com.sandbox.testing.entity.EmployeeTable;
+import demo.employee.dao.EmployeeDaoImp;
+import demo.employee.entity.EmployeeTable;
 
 @Service
-public class TestServiceImp implements TestService{
+public class EmployeeServiceImp implements EmployeeService{
 
 	@Autowired
-	TestDaoImp dao;
+	EmployeeDaoImp dao;
 	
 	@Override
 	public List<EmployeeTable> getData() {

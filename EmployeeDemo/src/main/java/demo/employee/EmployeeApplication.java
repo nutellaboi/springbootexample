@@ -1,13 +1,13 @@
-package com.sandbox.testing;
+package demo.employee;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TestingApplication {
+public class EmployeeApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TestingApplication.class, args);
+		SpringApplication.run(EmployeeApplication.class, args);
 	}
 
 }

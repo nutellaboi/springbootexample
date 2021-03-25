@@ -1,10 +1,10 @@
-package com.sandbox.testing.dao;
+package demo.employee.dao;
 
 import java.util.List;
 
-import com.sandbox.testing.entity.EmployeeTable;
+import demo.employee.entity.EmployeeTable;
 
-public interface TestDao {
+public interface EmployeeDao {
 	
 	public List<EmployeeTable> getEmpData();
 

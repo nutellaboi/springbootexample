@@ -1,4 +1,4 @@
-package com.sandbox.testing.dao;
+package demo.employee.dao;
 
 import java.util.List;
 
@@ -7,10 +7,10 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.sandbox.testing.entity.EmployeeTable;
+import demo.employee.entity.EmployeeTable;
 
 @Repository
-public class TestDaoImp implements TestDao {
+public class EmployeeDaoImp implements EmployeeDao {
 
 	@Autowired
 	JdbcTemplate jdbc;
