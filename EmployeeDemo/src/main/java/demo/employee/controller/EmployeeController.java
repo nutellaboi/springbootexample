@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import demo.employee.entity.EmployeeTable;
+import demo.employee.entity.LoginRequestBody;
+import demo.employee.entity.LoginResponseBody;
+import demo.employee.entity.UsersTable;
+import demo.employee.service.CustomAuthenticationService;
 import demo.employee.service.EmployeeServiceImp;
 
 @RestController
@@ -21,6 +25,32 @@ public class EmployeeController {
 
 	@Autowired
 	EmployeeServiceImp serv;
+	
+	@Autowired
+	private CustomAuthenticationService authService;
+	
+	@RequestMapping(method=RequestMethod.POST,value="/login")
+	public ResponseEntity<Object> login(@RequestBody LoginRequestBody login)throws Exception{
+		String username=login.getUsername();
+		String password=login.getPassword();
+		
+		LoginResponseBody response=authService.getLoginDetails(username,password);
+
+		return ResponseEntity.ok(response);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST,value="/sign-up")
+	public ResponseEntity<Object> signUp(@RequestBody UsersTable user) throws Exception{
+		String response=serv.signUp(user);
+		ResponseEntity<Object> responseEntity;
+		if(response.equals("ERROR!")) {
+			responseEntity= new ResponseEntity<Object>(response,HttpStatus.BAD_REQUEST);
+		}
+		else {
+			responseEntity= new ResponseEntity<Object>(response,HttpStatus.OK);
+		}
+		return responseEntity;
+	}
 	
 	@RequestMapping(method=RequestMethod.GET,value="/get")
 	public ResponseEntity<Object> getData(){

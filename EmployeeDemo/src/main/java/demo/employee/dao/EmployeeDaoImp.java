@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import demo.employee.entity.EmployeeTable;
+import demo.employee.entity.UsersTable;
 
 @Repository
 public class EmployeeDaoImp implements EmployeeDao {
@@ -57,6 +58,31 @@ public class EmployeeDaoImp implements EmployeeDao {
 		String sql="DELETE FROM employee_table WHERE employee_id=? ";
 		int val=jdbc.update(sql, new Object[] {id});
 		return val;
+	}
+
+	@Override
+	public String createUser(UsersTable user) {
+		// TODO Auto-generated method stub
+		String sql="INSERT INTO users_table(`user_name`,`password`,`user_role`) VALUES(?,?,?)";
+		String response="";
+		try {
+			jdbc.update(sql, new Object[] {user.getUser_name(),user.getPassword(),user.getUser_role()});
+			response="User successfully created!";
+			return response;
+		}
+		catch(Exception e){
+			response="ERROR!";
+			return response;
+		}
+	}
+
+	public UsersTable getUserByUsername(String username) {
+		// TODO Auto-generated method stub
+		String sql="SELECT user_id,user_name,password,user_role FROM users_table WHERE user_name=?;";
+		List<UsersTable> user=jdbc.query(sql, new BeanPropertyRowMapper(UsersTable.class), new Object[] {username});
+		if(user.isEmpty()) 
+			return null;
+		return user.get(0);
 	}
 
 

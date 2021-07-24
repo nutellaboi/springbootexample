@@ -11,12 +11,17 @@ import org.springframework.stereotype.Service;
 
 import demo.employee.dao.EmployeeDaoImp;
 import demo.employee.entity.EmployeeTable;
+import demo.employee.entity.UsersTable;
+import demo.employee.security.JwtUserDetailsService;
 
 @Service
 public class EmployeeServiceImp implements EmployeeService{
 
 	@Autowired
 	EmployeeDaoImp dao;
+	
+	@Autowired
+	JwtUserDetailsService jwtService;
 	
 	@Override
 	public List<EmployeeTable> getData() {
@@ -72,5 +77,12 @@ public class EmployeeServiceImp implements EmployeeService{
 		   }
 			return result;
 		}
+
+	@Override
+	public String signUp(UsersTable user) {
+		// TODO Auto-generated method stub
+		UsersTable encUser=jwtService.encryptPassword(user);
+		return dao.createUser(encUser);
+	}
 
 }
