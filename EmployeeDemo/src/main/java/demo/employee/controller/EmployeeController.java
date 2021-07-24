@@ -1,4 +1,4 @@
-package com.sandbox.testing.controller;
+package demo.employee.controller;
 
 import java.util.List;
 import java.util.Map;
@@ -12,15 +12,45 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sandbox.testing.entity.EmployeeTable;
-import com.sandbox.testing.service.TestServiceImp;
+import demo.employee.entity.EmployeeTable;
+import demo.employee.entity.LoginRequestBody;
+import demo.employee.entity.LoginResponseBody;
+import demo.employee.entity.UsersTable;
+import demo.employee.service.CustomAuthenticationService;
+import demo.employee.service.EmployeeServiceImp;
 
 @RestController
 @RequestMapping("/emp")
-public class TestController {
+public class EmployeeController {
 
 	@Autowired
-	TestServiceImp serv;
+	EmployeeServiceImp serv;
+	
+	@Autowired
+	private CustomAuthenticationService authService;
+	
+	@RequestMapping(method=RequestMethod.POST,value="/login")
+	public ResponseEntity<Object> login(@RequestBody LoginRequestBody login)throws Exception{
+		String username=login.getUsername();
+		String password=login.getPassword();
+		
+		LoginResponseBody response=authService.getLoginDetails(username,password);
+
+		return ResponseEntity.ok(response);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST,value="/sign-up")
+	public ResponseEntity<Object> signUp(@RequestBody UsersTable user) throws Exception{
+		String response=serv.signUp(user);
+		ResponseEntity<Object> responseEntity;
+		if(response.equals("ERROR!")) {
+			responseEntity= new ResponseEntity<Object>(response,HttpStatus.BAD_REQUEST);
+		}
+		else {
+			responseEntity= new ResponseEntity<Object>(response,HttpStatus.OK);
+		}
+		return responseEntity;
+	}
 	
 	@RequestMapping(method=RequestMethod.GET,value="/get")
 	public ResponseEntity<Object> getData(){
@@ -38,7 +68,7 @@ public class TestController {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET,value="/get/{id}") //pass employee_id in URL
-	public ResponseEntity<Object> getData(@PathVariable int id){
+	public ResponseEntity<Object> getDataById(@PathVariable int id){
 		List<EmployeeTable> list=serv.getDataById(id);
 		ResponseEntity<Object> response;
 		if(list.isEmpty()) {
@@ -58,7 +88,7 @@ public class TestController {
 		ResponseEntity<Object> response;
 		if(val>=1) {
 			String s=val+" Data Inserted";
-			response= new ResponseEntity<Object>(s,HttpStatus.CREATED);
+			response= new ResponseEntity<Object>(s,HttpStatus.OK);
 		}
 		else {
 			String s="Error Inserting";

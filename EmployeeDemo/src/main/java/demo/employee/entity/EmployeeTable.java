@@ -1,4 +1,4 @@
-package com.sandbox.testing.entity;
+package demo.employee.entity;
 
 public class EmployeeTable {
 

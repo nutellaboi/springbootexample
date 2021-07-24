@@ -1,10 +1,11 @@
-package com.sandbox.testing.dao;
+package demo.employee.dao;
 
 import java.util.List;
 
-import com.sandbox.testing.entity.EmployeeTable;
+import demo.employee.entity.EmployeeTable;
+import demo.employee.entity.UsersTable;
 
-public interface TestDao {
+public interface EmployeeDao {
 	
 	public List<EmployeeTable> getEmpData();
 
@@ -15,5 +16,7 @@ public interface TestDao {
 	public List<EmployeeTable> getEmpDataById(int id);
 
 	public List<EmployeeTable> putEmpData(String etString, int id);
+	
+	public String createUser(UsersTable user);
 
 }

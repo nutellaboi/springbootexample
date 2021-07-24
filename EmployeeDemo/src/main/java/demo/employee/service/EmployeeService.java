@@ -1,11 +1,12 @@
-package com.sandbox.testing.service;
+package demo.employee.service;
 
 import java.util.List;
 import java.util.Map;
 
-import com.sandbox.testing.entity.EmployeeTable;
+import demo.employee.entity.EmployeeTable;
+import demo.employee.entity.UsersTable;
 
-public interface TestService {
+public interface EmployeeService {
 	
 	public List<EmployeeTable> getData();
 
@@ -16,5 +17,7 @@ public interface TestService {
 	public List<EmployeeTable> getDataById(int id);
 
 	public List<EmployeeTable> putData(int id, Map<String, Object> emp);
+	
+	public String signUp(UsersTable user);
 
 }

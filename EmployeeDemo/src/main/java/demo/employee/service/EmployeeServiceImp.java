@@ -1,4 +1,4 @@
-package com.sandbox.testing.service;
+package demo.employee.service;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -9,14 +9,19 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sandbox.testing.dao.TestDaoImp;
-import com.sandbox.testing.entity.EmployeeTable;
+import demo.employee.dao.EmployeeDaoImp;
+import demo.employee.entity.EmployeeTable;
+import demo.employee.entity.UsersTable;
+import demo.employee.security.JwtUserDetailsService;
 
 @Service
-public class TestServiceImp implements TestService{
+public class EmployeeServiceImp implements EmployeeService{
 
 	@Autowired
-	TestDaoImp dao;
+	EmployeeDaoImp dao;
+	
+	@Autowired
+	JwtUserDetailsService jwtService;
 	
 	@Override
 	public List<EmployeeTable> getData() {
@@ -72,5 +77,12 @@ public class TestServiceImp implements TestService{
 		   }
 			return result;
 		}
+
+	@Override
+	public String signUp(UsersTable user) {
+		// TODO Auto-generated method stub
+		UsersTable encUser=jwtService.encryptPassword(user);
+		return dao.createUser(encUser);
+	}
 
 }
